@@ -31,3 +31,46 @@
     transform: rotate(360deg);
   }
 }
+
+.forms-inner {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 auto;
+}
+
+.button {
+  align-self: flex-end;
+  min-width: 100px;
+}
+
+.block {
+  padding: 15px 0;
+  border: 1px solid black;
+  border-radius: 10px;
+  background: transparent;
+  outline: none;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+.table-block {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+}
