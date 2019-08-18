@@ -5,10 +5,6 @@ class Table extends React.Component {
     super(props)
   }
 
-  onClick = (key) => {
-    this.props.onClick(key)
-  }
-
   render() {
     const { walkHistory } = this.props
 
@@ -18,7 +14,7 @@ class Table extends React.Component {
           <div key={el.key} className='row'>
             <div>{el.key} </div>
             <div>{el.value} </div>
-            <button onClick={() => this.onClick(el.key)}> Удалить</button>
+            <button onClick={() =>this.props.onRemoveRecordClick(el.key)}> Удалить</button>
           </div>
         )}
       </div>

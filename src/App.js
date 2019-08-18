@@ -7,7 +7,6 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = { data: '', km: '', walkHistory: [] }
-    this.walkHistory = []
   }
 
   onChange = (event) => {
@@ -29,30 +28,28 @@ class App extends React.Component {
 
       let data = this.state.data;
       let km = Number(this.state.km);
-      let sameDate = this.walkHistory.find(el => el.key === data);
 
-      // Проверка одинаковых дат
-      sameDate ? sameDate.value += km : this.walkHistory.push({ key: data, value: km })
+      this.setState(prevState => ({
+        ...prevState,
 
-      // Сортировка по возрастанию
-      this.walkHistory.sort(function (a, b) {
-        return (new Date(b.key).getTime() - new Date(a.key).getTime())
-      })
-
-      this.setState(prevState => ({ ...prevState, walkHistory: this.walkHistory }), () => console.log(this.state))
+        walkHistory: this.state.walkHistory.find(el => el.key === data)
+          ? this.state.walkHistory.map(el => el.key === data ? { key: el.key, value: el.value + km } : el)
+          : this.state.walkHistory.concat({ key: data, value: km })
+      }), () => console.log(this.state)
+      )
     }
   }
 
-  onClick = (key) => {
-    this.walkHistory = this.walkHistory.filter(el => el.key !== key)
-    this.setState(prevState => ({ walkHistory: this.walkHistory }))
+  onRemoveRecordClick = (key) => {
+    this.setState(prevState => ({ walkHistory: this.state.walkHistory.filter(el => el.key !== key) }))
   }
 
   render() {
     return (
       <div className="App">
         <Forms data={this.state.data} km={this.state.km} onChange={this.onChange} onSubmit={this.onSubmit} />
-        <Table walkHistory={this.state.walkHistory} onClick={this.onClick} />
+        <Table walkHistory={this.state.walkHistory.sort(function (a, b) { return (new Date(b.key).getTime() - new Date(a.key).getTime()) })}
+          onRemoveRecordClick={this.onRemoveRecordClick} />
       </div>
     );
   }
